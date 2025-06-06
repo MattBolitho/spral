@@ -31,3 +31,7 @@ nvcc_arch_sm
 
 # static library
 libspral.a
+
+# Rust
+target/
+Cargo.lock
