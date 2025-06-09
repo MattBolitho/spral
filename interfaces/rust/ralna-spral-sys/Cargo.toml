@@ -1,0 +1,11 @@
+[package]
+name = "ralna-spral-sys"
+version = "2025.5.20"
+edition = "2024"
+repository = "https://github.com/ralna/spral"
+license-file = "../../../LICENSE"
+categories = ["external-ffi-bindings", "mathematics"]
+
+[build-dependencies]
+bindgen = "0.72.0"
+glob = "0.3.2"
