@@ -17,7 +17,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Err(e) => eprintln!("Error reading header file: {}", e),
         }
     }
-    let bindings = bindings_builder.generate().expect("Failed to generate SPRAL bindings.");
+    let bindings = bindings_builder
+        .generate()
+        .expect("Failed to generate SPRAL bindings.");
     let out_path = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
     bindings.write_to_file(out_path.join("bindings.rs"))?;
 
