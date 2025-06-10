@@ -1,4 +1,6 @@
 //! # RALNA SPRAL Native Bindings
+//!
+//! Rust bindings to SPRAL: The Sparse Parallel Robust Algorithm Library.
 
 // Prevents warnings when non-idiomatic Rust style is used.
 #![allow(non_upper_case_globals)]
