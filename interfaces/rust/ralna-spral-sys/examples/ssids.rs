@@ -1,22 +1,26 @@
 use ralna_spral_sys::*;
-use std::{error::Error, ffi::c_void};
+use std::{
+    error::Error,
+    ffi::c_void,
+    ptr::{addr_of, addr_of_mut, null, null_mut},
+};
 
 fn assert_inform_flag(inform: &spral_ssids_inform, mut akeep: *mut c_void, mut fkeep: *mut c_void) {
     if inform.flag < 0 {
         unsafe {
-            spral_ssids_free(std::ptr::addr_of_mut!(akeep), std::ptr::addr_of_mut!(fkeep));
+            spral_ssids_free(addr_of_mut!(akeep), addr_of_mut!(fkeep));
         }
         std::process::exit(1);
     }
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut akeep: *mut c_void = std::ptr::null_mut();
-    let mut fkeep: *mut c_void = std::ptr::null_mut();
+    let mut akeep: *mut c_void = null_mut();
+    let mut fkeep: *mut c_void = null_mut();
 
     let mut options = spral_ssids_options::default();
     let mut inform = spral_ssids_inform::default();
-    unsafe { spral_ssids_default_options(std::ptr::addr_of_mut!(options)) };
+    unsafe { spral_ssids_default_options(addr_of_mut!(options)) };
     options.array_base = 1; // For Fortran indexing
 
     /* Data for matrix:
@@ -40,27 +44,27 @@ fn main() -> Result<(), Box<dyn Error>> {
         spral_ssids_analyse(
             check,
             n,
-            std::ptr::null_mut(),
+            null_mut(),
             ptr.as_ptr(),
             row.as_ptr(),
-            std::ptr::null_mut(),
-            std::ptr::addr_of_mut!(akeep),
-            std::ptr::addr_of!(options),
-            std::ptr::addr_of_mut!(inform),
+            null_mut(),
+            addr_of_mut!(akeep),
+            addr_of!(options),
+            addr_of_mut!(inform),
         );
     }
     assert_inform_flag(&inform, akeep, fkeep);
     unsafe {
         spral_ssids_factor(
             posdef,
-            std::ptr::null(),
-            std::ptr::null(),
+            null(),
+            null(),
             val.as_ptr(),
-            std::ptr::null_mut(),
+            null_mut(),
             akeep,
-            std::ptr::addr_of_mut!(fkeep),
-            std::ptr::addr_of!(options),
-            std::ptr::addr_of_mut!(inform),
+            addr_of_mut!(fkeep),
+            addr_of!(options),
+            addr_of_mut!(inform),
         );
     }
     assert_inform_flag(&inform, akeep, fkeep);
@@ -72,8 +76,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             x.as_mut_ptr(),
             akeep,
             fkeep,
-            std::ptr::addr_of!(options),
-            std::ptr::addr_of_mut!(inform),
+            addr_of!(options),
+            addr_of_mut!(inform),
         );
     }
     assert_inform_flag(&inform, akeep, fkeep);
@@ -85,16 +89,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         spral_ssids_enquire_indef(
             akeep,
             fkeep,
-            std::ptr::addr_of!(options),
-            std::ptr::addr_of_mut!(inform),
+            addr_of!(options),
+            addr_of_mut!(inform),
             piv_order.as_mut_ptr(),
-            std::ptr::null_mut(),
+            null_mut(),
         );
     }
     println!("Pivot order: {:?}", piv_order);
 
-    let error =
-        unsafe { spral_ssids_free(std::ptr::addr_of_mut!(akeep), std::ptr::addr_of_mut!(fkeep)) };
+    let error = unsafe { spral_ssids_free(addr_of_mut!(akeep), addr_of_mut!(fkeep)) };
     assert!(error == 0);
 
     Ok(())
