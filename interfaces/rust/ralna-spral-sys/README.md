@@ -25,7 +25,7 @@ This crate **does not** install SPRAL for you, it requires a pre-existing
 installation to be available.
 
 For information on how to install SPRAL, please refer to the
-[installation](https://github.com/ralna/spral?tab=readme-ov-file#installation "SPRAL README installation section")
+[README](https://github.com/ralna/spral?tab=readme-ov-file#installation "SPRAL README installation section")
 or the
 [C interface installation documentation](https://ralna.github.io/spral/_build/html/C/install.html "C interface installation documentation").
 

@@ -15,3 +15,9 @@ name = "ssids"
 test = true
 harness = false
 doc-scrape-examples = false
+
+[[example]]
+name = "random"
+test = true
+harness = false
+doc-scrape-examples = false
