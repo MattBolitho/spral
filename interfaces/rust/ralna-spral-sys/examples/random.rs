@@ -1,7 +1,7 @@
 use ralna_spral_sys::*;
-use std::{error::Error, ptr::addr_of_mut};
+use std::ptr::addr_of_mut;
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() {
     let mut state = SPRAL_RANDOM_INITIAL_SEED as i32;
     let initial_seed = state;
 
@@ -40,6 +40,4 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Sample B(1,0.5)                 = {}", unsafe {
         spral_random_logical(addr_of_mut!(state))
     });
-
-    Ok(())
 }
